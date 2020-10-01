@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS method</title>
+    <style>
+
+        *{
+            box-sizing: border-box;
+        }
+        h1{ color: #fff;
+            text-align: center;
+            padding: 0 8px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .input-box{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 50px;
+            align-items: center;
+            transition: all 1s linear;
+            visibility: hidden;
+        }
+        .input{
+            border: none;
+            position: relative;
+            padding: 5px;
+            width: 220px;
+            border-bottom: 3px solid rgb(111, 240, 175);
+            font-size: 16px;
+            display: block;
+            background: transparent;
+            color: White;
+            transition: all 1s linear;
+        }
+        .counter{
+            /* float: right; */
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 3px;
+            margin-left: 190px;
+            color: red;
+        }
+        form{
+            min-height: 60vh;
+            background: rgb(58, 53, 53);
+            max-width: 400px;
+            margin: 30vh auto;
+            border-radius: 10px;
+            border: 5px solid rgb(111, 240, 175);
+        }
+        ::placeholder{
+            color: #fff;
+        }
+        .random{
+            color: rgb(111, 240, 175);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            padding: 10px;
+            font-size: 14px;
+            background-color: #000;
+            margin: 10px 0;
+        }
+        .start{
+            margin: 0 35%;
+            
+        }
+        .btn{
+            background: rgb(82, 109, 228);
+            padding: 10px 30px;
+            display: block;
+            cursor: pointer;
+            border-radius: 5px;
+            outline: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            text-transform: uppercase;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <div style="font-size: 20px; font-family:Arial, Helvetica, sans-serif; color: Red; " id="date"></div> -->
+    <!-- <div style="font-size: 20px; font-family:Arial, Helvetica, sans-serif; color: Red; " id="time"></div> -->
+
+    <!-- <script src="javascript.js"></script> -->
+    <!-- <script> setInterval(string,1000)</script> -->
+<form action="">
+    <h1>Number Guess <br> GAME!!</h1>
+     <h1 style="font-size: 12px;">Guess between 1 to 100</h1>
+
+    <div class="input-box" style="opacity: 0;">
+            <input class="input" type="text" maxlength="20"  placeholder="Enter Number.... " autofocus>
+            <span class="counter">20</span>
+            
+            <input type="submit" class="Check btn" value="Check">
+            <input type="reset" class="reset btn" value="Restart" style="display: none;">
+            <div class="random">Game Result Show Here </div>
+    </div>
+    <input type="button" class="start btn"  value = "Start">
+</form>
+<script>
+            var input = document.querySelector(".input");
+            var count = document.querySelector(".counter");
+            var random =document.querySelector(".random");
+            var rnum = Math.floor(Math.random()*100+1);
+            var reset = document.querySelector(".reset");
+            var start = document.querySelector(".start");
+            var Check = document.querySelector(".Check");
+            var guess = 5; 
+    
+            Check.addEventListener("click",counter);
+            start.addEventListener("click", ()=>{
+                start.style.display = "none"; 
+                document.querySelector(".input-box").style.opacity = "1";
+                document.querySelector(".input-box").style.visibility = "visible"});
+            input.addEventListener("input", ()=>{count.innerHTML = input.value.length+"/20";});
+
+           
+
+            function counter(e) {
+                e.preventDefault();
+                    if(input.value == rnum){
+                        guess--
+                        input.disabled = true;
+                        input.style.background  = "red";
+                        random.innerHTML = "<span style='color: rgb(111, 240, 175); '> You Win !! You found number in  "+(5-guess)+" Guesses</span> <br> <span style='color : red;'> Number is : "+rnum;
+                        reset.style.display = "block";
+                        reset.style.display = "block";
+                        Check.style.display = "none";
+
+                    }
+                    else if (guess == 1){ 
+                        input.style.background  = "red";
+                        random.innerHTML = "Game Over !! /  0 Gusses Left ";
+                        reset.style.display = "block";
+                        Check.style.display = "none";
+                        input.disabled = true;
+                    }
+                    else{
+                        (input.value > rnum) ? clearInput("High") : clearInput("Low");
+                    }
+                
+                    
+            }
+            function clearInput(string){
+                        guess--;
+                        input.value = "";
+                        random.innerHTML = "Entered Number is<span style='color:red;'> "+string+" </span>"+guess+"/5"+" Guesses Left";  
+            }
+        
+            reset.addEventListener("click",function(){
+                input.disabled= false;
+                random.innerHTML = "Game Result Show Here";
+                rnum = Math.floor(Math.random()*100+1);
+                guess = 5;
+                reset.style.display = "none";
+                Check.style.display = "block";
+                input.style.background  = "";
+            })
+    </script>
+
+</body>
+</html>
